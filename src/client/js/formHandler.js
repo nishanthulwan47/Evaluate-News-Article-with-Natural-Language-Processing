@@ -6,10 +6,22 @@
     Client.checkForName(formText)
 
     console.log("::: Form Submitted :::")
-    fetch('http://localhost:8080/test')
-    .then(res => res.json())
+    fetch('http://localhost:8081/article', {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({url: formText}),
+    })
+    .then(res => {
+        return res.json()
+    })
     .then(function(res) {
-        document.getElementById('results').innerHTML = res.message
+        document.getElementById("bored").innerHTML = `Bored: ${res.bored}`;
+        document.getElementById("relaxed").innerHTML = `Relaxed: ${res.relaxed}`
+        document.getElementById("enthusiastic").innerHTML = `Enthusiastic: ${res.enthusiastic}`
+        document.getElementById("refreshed").innerHTML = `Refereshed: ${res.refereshed}`
     })
 }
 

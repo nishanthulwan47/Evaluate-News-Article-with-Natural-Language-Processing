@@ -1,75 +1,48 @@
-// Hidden api key
-
+const fetch = require('node-fetch')
 const dotenv = require('dotenv');
 dotenv.config();
 
-//depedencies
+//MeaningCloud API
+const API_KEY = process.env.API_KEY;
+const baseUrl = "https://api.meaningcloud.com/sentiment-2.1?";
 
-var path = require('path')
-const fetch = require('node-fetch');
-const mockAPIResponse = require('./mockAPI.js')
-
-//Server
-
+const path = require('path')
 const express = require('express')
+const mockAPIResponse = require('./mockAPI.js')
+const bodyParser = require('body-parser')
+const cors = require('cors');
 const app = express()
 
-// Middleware
-
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-
-// Cors 
-
-const cors = require('cors');
-const { response } = require('express');
-app.use(cors());
-
-// Project folder
-
 app.use(express.static('dist'))
+app.use(cors());
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json());
+app.use(express.static('dist'))
+
 console.log(__dirname)
 
-// MeaningCloud credentials API
+//listening to the port
 
-const baseURL = 'https://api.meaningcloud.com/lang-4.0/identification';
-const apiKey = process.env.API_KEY;
-console.log(`Your API Key is ${process.env.API_KEY}`);
-
-
-
-// Get route
 app.get('/', function (req, res) {
-    // res.sendFile('dist/index.html')
-    res.sendFile(path.resolve('src/client/views/index.html'))
+    res.sendFile(path.resolve('src/dist/views/index.html'))
 })
 
-// designates what port the app will listen to for incoming requests
-app.listen(8080, function () {
-    console.log('Example app listening on port 8080!')
+app.listen(8081, function () {
+    console.log('Example app listening on port 8081!')
 })
 
-app.get('/test', function (req, res) {
+app.get('/test', function (req,res) {
     res.send(mockAPIResponse)
-})
+});
 
-// Post route
+app.post("/article", async (req, res) => {
+    const response = await fetch(`${baseUrl}${API_KEY}&lang=auto&url=${req.body.url}`);
 
-const formdata = new FormData();
-formdata.append("key", "API_KEY");
-formdata.append("txt", "Your text here");
-
-const requestOptions = {
-    method: 'POST',
-    body: formdata,
-    redirect: 'follow'
-};
-
-const response = fetch("https://api.meaningcloud.com/lang-4.0/identification", requestOptions)
-.then( response => ({
-    status: response.status,
-    body: response.json()
-}))
-.then({status, body} => console.log(status, body))
-.catch(error => console.log('error', error));
+    try {
+        const data = await response.json();
+        response.send(data);
+    } catch (error) {
+        console.log("error", error);
+    }
+});
