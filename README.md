@@ -42,3 +42,7 @@
 
 ![alt post](https://github.com/nishanthulwan47/Evaluate-a-News-Article-using-Natural-Language-Processing/blob/main/images/Post.png?raw=true)
 
+
+#### UI/UX 
+
+
