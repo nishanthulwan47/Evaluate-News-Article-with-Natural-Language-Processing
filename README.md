@@ -40,7 +40,5 @@
 
 #### Postman Request
 
-#### Post Request
-
-![alt post](https://github.com/nishanthulwan47/EVALUATE-NEWS-NLP/blob/main/images/Post.png?raw=true)
+![alt post](https://github.com/nishanthulwan47/Evaluate-a-News-Article-using-Natural-Language-Processing/blob/main/images/Post.png?raw=true)
 
