@@ -1,5 +1,4 @@
 import fetch from "node-fetch";
-import { url } from "node:inspector";
 
 function handleSubmit(event) {
     event.preventDefault()
