@@ -1,8 +1,12 @@
-function checkUrl(inputUrl) {
+function checkForURL(inputText) {
+    console.log("::: Running checkForURL :::", inputText);
+    const validURL = require('valid-url');
 
-    const regex = /^((https?):\/\/)?([w|W]{3}\.)+[a-zA-Z0-9\-\.]{3,}\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/;
-    
-    return regex.test(inputUrl);
+    if (validURL.isWebUri(inputText)) {
+        console.log('Valid URL');
+    } else {
+        console.log('Invalid URL!');
+    }
 }
 
-export { checkUrl };
+export { checkForURL }

@@ -1,48 +1,64 @@
-const fetch = require('node-fetch')
+let apiData;
+
+let projectData;
+
 const dotenv = require('dotenv');
 dotenv.config();
 
-//MeaningCloud API
-const API_KEY = process.env.API_KEY;
-const baseUrl = "https://api.meaningcloud.com/sentiment-2.1?";
+const baseurl = 'https://api.meaningcloud.com/sentiment-2.1?key=';
+const apiKey = `${process.env.API_KEY}&of=json&txt`;
+const lang = '&lang=en';
 
-const path = require('path')
-const express = require('express')
+const fetch = require("node-fetch");
+var path = require('path')
+
+const express = require('express');
 const mockAPIResponse = require('./mockAPI.js')
-const bodyParser = require('body-parser')
-const cors = require('cors');
 const app = express()
 
-app.use(express.static('dist'))
-app.use(cors());
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: false}))
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
+
+const cors = require('cors');
+const { response } = require('express');
+app.use(cors());
+
 app.use(express.static('dist'))
 
 console.log(__dirname)
 
-//listening to the port
-
 app.get('/', function (req, res) {
-    res.sendFile(path.resolve('src/dist/views/index.html'))
+    res.sendFile('dist/index.html')
 })
 
 app.listen(8081, function () {
-    console.log('Example app listening on port 8081!')
+    console.log('Example app listening on port 8081');
 })
 
-app.get('/test', function (req,res) {
-    res.send(mockAPIResponse)
-});
+app.get('/all', sendData);
+function sendData (req, res) {
+    res.send(projectData);
+};
 
-app.post("/article", async (req, res) => {
-    const response = await fetch(`${baseUrl}${API_KEY}&lang=auto&url=${req.body.url}`);
+app.post('/article', addData);
+function addData (req, res) {
+    let entry = req.body.ft;
+    apiData = retrieveData(baseurl, apiKey, entry, lang)
+    .then(function(apiData) {
+        projectData = {data: apiData};
+        console.log(projectData);
+        res.send(projectData);
+    })
+};
 
+const retrieveData = async (url, key, text, ln) => {
+    const request = await fetch(url+key+text+ln);
     try {
-        const data = await response.json();
-        response.send(data);
+        const data = await response.json()
+        return data;
     } catch (error) {
         console.log("error", error);
     }
-});
+};

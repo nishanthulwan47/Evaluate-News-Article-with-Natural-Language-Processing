@@ -1,28 +1,48 @@
- function handleSubmit(event) {
+import fetch from "node-fetch";
+import { url } from "node:inspector";
+
+function handleSubmit(event) {
     event.preventDefault()
 
-    // check what text was put into the form field
-    let formText = document.getElementById('url').value
-    if(Client.checkUrl(formText))
+    let formText = document.getElementById('name').value
+    Client.checkForURL(formText)
+    console.log("Form Submitted");
+    postData('http://localhost:8081/article', {ft: formText})
+    .then( () => updateUI())
 
-    console.log("::: Form Submitted :::")
-    fetch('http://localhost:8081/article', {
-        method: "POST",
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({url: formText}),
-    })
-    .then(res => {
-        return res.json()
-    })
-    .then(function(res) {
-        document.getElementById("bored").innerHTML = `Bored: ${res.bored}`;
-        document.getElementById("relaxed").innerHTML = `Relaxed: ${res.relaxed}`
-        document.getElementById("enthusiastic").innerHTML = `Enthusiastic: ${res.enthusiastic}`
-        document.getElementById("refreshed").innerHTML = `Refereshed: ${res.refereshed}`
-    })
 }
 
 export { handleSubmit }
+
+const postData = async ( url = '', data = {}) => {
+    const response = await fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+
+    try {
+        const newData = await response.json();
+        return newData;
+    } catch (error) {
+        console.log("error", error);
+    }
+};
+
+const updateUI = async () => {
+    const request = await fetch('http://localhost:8081/article');
+    try {
+        const res = await request.json();
+        console.log(res)
+        document.getElementById('score_tag').innerHTML = res.data.score_tag;
+        document.getElementById('agreement').innerHTML = res.data.agreement;
+        document.getElementById('subjectivity').innerHTML = res.data.subjectivity;
+        document.getElementById('confidence').innerHTML = res.data.confidence;
+        document.getElementById('irony').innerHTML = res.data.irony;
+    } catch(error) {
+        console.log("error", error);
+    }
+}
