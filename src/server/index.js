@@ -33,8 +33,8 @@ app.get('/', function (req, res) {
     res.sendFile('dist/index.html')
 })
 
-app.listen(8081, function () {
-    console.log('Example app listening on port 8081');
+app.listen(8083, function () {
+    console.log('Example app listening on port 8083');
 })
 
 app.get('/all', sendData);
