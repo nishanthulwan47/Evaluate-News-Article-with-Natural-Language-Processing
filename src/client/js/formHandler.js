@@ -6,7 +6,7 @@ function handleSubmit(event) {
     let formText = document.getElementById('name').value
     Client.checkForURL(formText)
     console.log("Form Submitted");
-    postData('http://localhost:8081/article', {ft: formText})
+    postData('http://localhost:8081/addData', {ft: formText})
     .then( () => updateUI())
 
 }
@@ -32,7 +32,7 @@ const postData = async ( url = '', data = {}) => {
 };
 
 const updateUI = async () => {
-    const request = await fetch('http://localhost:8081/article');
+    const request = await fetch('http://localhost:8081/all');
     try {
         const res = await request.json();
         console.log(res)

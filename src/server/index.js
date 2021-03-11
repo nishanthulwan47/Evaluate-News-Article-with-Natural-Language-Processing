@@ -42,7 +42,7 @@ function sendData (req, res) {
     res.send(projectData);
 };
 
-app.post('/article', addData);
+app.post('/addData', addData);
 function addData (req, res) {
     let entry = req.body.ft;
     apiData = retrieveData(baseurl, apiKey, entry, lang)
