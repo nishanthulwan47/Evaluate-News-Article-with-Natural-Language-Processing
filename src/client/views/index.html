@@ -2,50 +2,56 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Evaluating News Article for Natural Language Processing</title>
-
+        <title>Test</title>
+     <!----  <link rel="stylesheet" href="/styles/resets.css">
+        <link rel="stylesheet" href="/styles/base.css">
+        <link rel="stylesheet" href="/styles/header.css">
+        <link rel="stylesheet" href="/styles/form.css">
+        <link rel="stylesheet" href="/styles/footer.css"> -->      
     </head>
+
     <body>
 
         <header>
-            <div class="logo_type">
-                <img class="logos_nlp"
-                src="/images/nlp.jpeg" alt="NLP" width="200" height="200">
+            <div class="">
+                Logo
             </div>
-            <div class="nav_bar">
-                
+            <div class="">
+                navigation
             </div>
         </header>
 
         <main>
-            <h1>Enter the url of you're Choice</h1>
+            <h1>Enter the url of your choice to view it's sentiment.</h1>
             <section>
                 <form class="" onsubmit="return Client.handleSubmit(event)">
-                    <input id="name" type="text" name="input" placeholder="Name">
+                    <input id="url" type="text" name="input" value=""  placeholder="Enter url">
                     <input type="submit" name="" value="submit" onclick="return Client.handleSubmit(event)" onsubmit="return Client.handleSubmit(event)">
                 </form>
             </section>
 
             <section>
                 <strong>Form Results:</strong>
-                <div id="score_tag"></div>
-                <div id="agreement"></div>
-                <div id="subjectivity"></div>
-                <div id="confidence"></div>
-                <div id="irony"></div> 
+                <div id="Positive"></div>
+                <div id="Neutral"></div>
+                <div id="Negative"></div>
+                <div id="Without Sentiment"></div>
             </section>
         </main>
 
         <footer>
             <p>This is a footer</p>
         </footer>
+
         <script>
-            // Check for service workers
+            // Check that service workers are supported
             if ('serviceWorker' in navigator) {
+                // Use the window load event to keep the page load performant
                 window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('/dist/service-worker.js');
+                    navigator.serviceWorker.register('/service-worker.js');
                 });
             }
-        </script>
+           </script>
+
     </body>
 </html>
