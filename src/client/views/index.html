@@ -43,7 +43,7 @@
             // Check for service workers
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('/service-worker.js');
+                    navigator.serviceWorker.register('/dist/service-worker.js');
                 });
             }
         </script>
