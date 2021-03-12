@@ -4,7 +4,7 @@ dotenv.config();
 
 //MeaningCloud API
 const API_KEY = process.env.API_KEY;
-const baseUrl = "https://api.meaningcloud.com/sentiment-2.1?";
+const baseUrl = "https://api.meaningcloud.com/sentiment-2.1?key=";
 
 const path = require('path')
 const express = require('express')

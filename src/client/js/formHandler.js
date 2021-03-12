@@ -7,22 +7,26 @@ function handleSubmit(event) {
 
     
     fetch('http://localhost:8081/article', {
-        method: "POST",
-        credentials: "same-origin",
-        ContentType: 'application/json',
-        Accept: 'application/json',
+        method: 'POST',
+        credentials: 'same-origin',
+        cache: 'no-cache',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
+        },
         body: JSON.stringify({url: formText}),
     })
     .then(res => {
         return res.json()
     })
     .then(function(res) {
-        document.getElementById("positive").innerHTML = `Positive: ${res.positive}`;
-        document.getElementById("neutral").innerHTML = `Neutral: ${res.neutral}`;
-        document.getElementById("negative").innerHTML = `Negative: ${res.negative}`;
-        document.getElementById("without sentiment").innerHTML = `Without Sentiment: ${res.without_sentiment}`;
+        document.getElementById("Positive").innerHTML = `Positive: ${res.score_tag}`;
+        document.getElementById("Neutral").innerHTML = `Neutral: ${res.confidence}`;
+        document.getElementById("Negative").innerHTML = `Negative: ${res.agreement}`;
     })
 }
+
 
     
 export { handleSubmit }
