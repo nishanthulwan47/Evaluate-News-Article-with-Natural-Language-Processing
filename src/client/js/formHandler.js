@@ -2,7 +2,7 @@ function handleSubmit(event) {
     event.preventDefault()
     // check what text was put into the form field
     let formText = document.getElementById('url').value
-    if(ClientRect.checkUrl(formText)) {
+    if(Client.checkUrl(formText)) {
         console.log("::: Form Submitted :::")
         fetch('http://localhost:8081/article', {
             method: 'POST',
